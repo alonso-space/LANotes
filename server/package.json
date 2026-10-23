@@ -1,0 +1,39 @@
+{
+  "name": "lanotes",
+  "version": "1.0.0",
+  "description": "Self-hosted notes app for your local network. No cloud: your notes stay on your own machine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "lint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test:run": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alonso-space/LANotes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/alonso-space/LANotes/issues"
+  },
+  "homepage": "https://github.com/alonso-space/LANotes#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "pg": "^8.23.1"
+  }
+}
