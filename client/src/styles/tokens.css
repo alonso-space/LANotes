@@ -1,0 +1,35 @@
+/* light-dark() sigue color-scheme: por defecto el del sistema; data-theme lo fuerza */
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#f4f4f5, #0b0b0d);
+  --surface: light-dark(#ffffff, #151518);
+  --control: light-dark(#f0f0f2, #0f0f12);
+  --control-active: light-dark(#ffffff, #26262c);
+  --border: light-dark(#e1e1e6, #2a2a30);
+  --text: light-dark(#121214, #f3f3f4);
+  --muted: light-dark(#63636d, #9b9ba5);
+  --accent: light-dark(#c8101e, #ff3d49);
+  --accent-fill: light-dark(#c8101e, #e5202d);
+  --accent-fill-hover: light-dark(#a60d19, #f0343f);
+  --glow: light-dark(rgb(200 16 30 / 0.07), rgb(229 32 45 / 0.16));
+  --shadow: light-dark(rgb(18 18 20 / 0.1), rgb(0 0 0 / 0.55));
+
+  --radius: 14px;
+  --radius-control: 10px;
+
+  font:
+    16px/1.5 system-ui,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    sans-serif;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

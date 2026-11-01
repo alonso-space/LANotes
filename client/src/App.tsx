@@ -1,51 +1,67 @@
-import { useEffect, useState } from 'react';
-import { getUsers, type User } from './services/usersService';
+import { useCallback, useEffect, useState } from 'react';
+import AuthScreen from './components/AuthScreen';
+import NotesScreen from './components/NotesScreen';
+import { ApiError } from './services/api';
+import { getAuthConfig, getCurrentUser, logout, type User } from './services/authService';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [guestRegister, setGuestRegister] = useState(true);
+  const [ready, setReady] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadUsers() {
+    async function init() {
       try {
-        const data = await getUsers();
-        setUsers(data);
+        const config = await getAuthConfig();
+        setGuestRegister(config.guestRegister);
+
+        try {
+          setUser(await getCurrentUser());
+        } catch (error) {
+          // 401 solo significa "no hay sesión": se muestra el login
+          if (!(error instanceof ApiError && error.status === 401)) {
+            throw error;
+          }
+        }
       } catch {
-        setError('No se pudieron cargar los usuarios.');
+        setLoadError('No se pudo conectar con el servidor.');
       } finally {
-        setLoading(false);
+        setReady(true);
       }
     }
 
-    void loadUsers();
+    void init();
   }, []);
 
-  if (loading) {
-    return <p>Cargando usuarios...</p>;
+  // Estable entre renders: NotesScreen lo usa como dependencia de un efecto
+  const handleSessionExpired = useCallback(() => setUser(null), []);
+
+  async function handleLogout() {
+    try {
+      await logout();
+    } finally {
+      setUser(null);
+    }
   }
 
-  if (error) {
-    return <p role="alert">{error}</p>;
+  if (!ready) {
+    return <p className="status-message">Abriendo tu cuaderno…</p>;
   }
 
-  return (
-    <main>
-      <h1>Usuarios de LANotes</h1>
+  if (loadError) {
+    return (
+      <p className="status-message" role="alert">
+        {loadError}
+      </p>
+    );
+  }
 
-      {users.length === 0 ? (
-        <p>No hay usuarios registrados.</p>
-      ) : (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id_user}>
-              {user.username}
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
-  );
+  if (!user) {
+    return <AuthScreen guestRegister={guestRegister} onAuthenticated={setUser} />;
+  }
+
+  return <NotesScreen user={user} onLogout={handleLogout} onSessionExpired={handleSessionExpired} />;
 }
 
 export default App;

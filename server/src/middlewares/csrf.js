@@ -1,5 +1,4 @@
 export function csrfProtection(req, res, next) {
-  // Métodos que no modifican datos
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     return next();
   }

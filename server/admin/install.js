@@ -1,4 +1,5 @@
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '../src/utils/password.js';
+import { normalizeUsername, validateRegistration } from '../src/utils/validators.js';
 import readline from 'readline';
 import fs from 'fs';
 import path from 'path';
@@ -294,19 +295,16 @@ La instalación continuará sin crear un usuario inicial.
 [2/2] Crear propietario inicial
 `);
 
-  const username = await ask('Usuario: ');
-
-  if (!username.trim()) {
-    throw new Error('El nombre de usuario no puede estar vacío.');
-  }
-
+  const username = normalizeUsername(await ask('Usuario: '));
   const password = await ask('Contraseña: ');
 
-  if (!password) {
-    throw new Error('La contraseña no puede estar vacía.');
+  const validationError = validateRegistration(username, password);
+
+  if (validationError) {
+    throw new Error(validationError);
   }
 
-  const hash = await bcrypt.hash(password, 12);
+  const hash = await hashPassword(password);
 
   await db.query(
     `
@@ -327,7 +325,7 @@ La instalación continuará sin crear un usuario inicial.
             )
         );
         `,
-    [username.trim(), hash],
+    [username, hash],
   );
 
   console.log('\n✓ Owner creado correctamente.');

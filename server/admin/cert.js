@@ -43,7 +43,6 @@ if (!ip) {
 
 console.log('Generando certificado para:', ip);
 
-// Configuración OpenSSL
 const config = `
 [req]
 prompt = no
@@ -59,7 +58,6 @@ CN = ${ip}
 subjectAltName = IP:${ip}, IP:127.0.0.1, DNS:localhost
 `;
 
-// Guardar configuración temporal
 fs.writeFileSync(configPath, config, 'utf8');
 
 try {

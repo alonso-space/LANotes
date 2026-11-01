@@ -1,0 +1,81 @@
+.editor {
+  width: min(42rem, calc(100vw - 1.5rem));
+  max-height: calc(100vh - 1.5rem);
+  padding: 1.5rem;
+  overflow: auto;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px var(--shadow);
+}
+
+.editor::backdrop {
+  background: rgb(0 0 0 / 0.6);
+}
+
+.editor-title,
+.editor-content {
+  display: block;
+  width: 100%;
+  margin: 0;
+  font: inherit;
+  color: var(--text);
+}
+
+.editor-title {
+  padding: 0.4rem 0 0.7rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-title:focus {
+  border-bottom-color: var(--accent);
+}
+
+.editor-content {
+  height: min(22rem, 50vh);
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  line-height: 1.6;
+  resize: none;
+  background: var(--control);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+
+.editor-title::placeholder,
+.editor-content::placeholder {
+  color: var(--muted);
+}
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.editor-actions > .btn-danger,
+.confirm-delete {
+  margin-left: auto;
+}
+
+.confirm-delete {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+@media (max-width: 36rem) {
+  .editor {
+    padding: 1.25rem;
+  }
+}

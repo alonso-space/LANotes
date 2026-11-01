@@ -147,3 +147,7 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# LANotes: nunca subir claves privadas ni datos de ejecución
+server/certs/
+server/data/

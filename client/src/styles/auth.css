@@ -1,0 +1,64 @@
+.auth-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.auth-theme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.auth-card {
+  width: min(25rem, 100%);
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px var(--shadow);
+}
+
+.auth-card .wordmark {
+  font-size: 1.7rem;
+}
+
+.auth-tagline {
+  margin: 0.4rem 0 1.5rem;
+  color: var(--muted);
+}
+
+.mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+  padding: 0.25rem;
+  background: var(--control);
+  border-radius: var(--radius-control);
+}
+
+.mode-switch button {
+  padding: 0.5rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mode-switch button[aria-pressed='true'] {
+  color: var(--text);
+  background: var(--control-active);
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+@media (max-width: 36rem) {
+  .auth-card {
+    padding: 1.25rem;
+  }
+}

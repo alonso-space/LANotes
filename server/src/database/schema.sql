@@ -23,12 +23,14 @@ CREATE TABLE IF NOT EXISTS notes (
     author_id INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    public BOOLEAN DEFAULT FALSE,
 
     FOREIGN KEY (author_id)
         REFERENCES users(id_user)
         ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS notes_author_updated_idx
+    ON notes (author_id, updated_at DESC);
 
 CREATE TABLE IF NOT EXISTS favorites (
     id_favorite SERIAL PRIMARY KEY,
